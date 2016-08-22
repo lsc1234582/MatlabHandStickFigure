@@ -1,0 +1,25 @@
+zeros(6) 
+
+zeros(1) wristFlex wristAbd 
+
+zeros(3) 
+
+zeros(4) ThumbRoll ThumbIndAbd  
+zeros(2) ThumbInnerJoint
+zeros(2) ThumbOuterJoint
+
+zeros(4) IndexInnerJoint zeros(1)
+zeros(1) IndexMiddleJoint zeros(1)
+zeros(1) IndexOuterJoint zeros(1)
+
+zeros(4) MiddleInnerJoint MiddleIndexAbd
+zeros(1) MiddleMiddleJoint zeros(1)
+zeros(1) MiddleOuterJoint zeros(1)
+
+zeros(4) RingInnerJoint RingMiddleAbd
+zeros(1) RingMiddleJoint zeros(1)
+zeros(1) RingOuterJoint zeros(1)
+
+zeros(4) PinkyInnerJoint PinkyRingAbd
+zeros(1) PinkyMiddleJoint zeros(1)
+zeros(1) PinkyOuterJoint zeros(1)

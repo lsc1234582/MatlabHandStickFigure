@@ -1,0 +1,95 @@
+classdef Ethome < handle
+    properties (SetAccess = protected, GetAccess = public)
+        Data        = [];
+        Time        = [];
+        DataLabels  = [];
+        Suit        = [];
+        RightHand   = [];
+        LeftHand    = [];
+        Gaze        = [];
+        Annotation  = [];
+        xyzData     = [];
+        SettingID   = '';
+        SubjectID   = '';
+        RecordDate  = '';
+        Fs          = [];
+        FrNumDataRate=[];
+        SceneVideo       = [];
+    end
+    
+    methods
+        function E = Ethome( dBEntry )
+            if nargin == 0
+                return
+            end
+            
+            % Set invariants
+            E.SubjectID = dBEntry(1).SubjectID;
+            E.SettingID = dBEntry(1).SettingID;
+            E.RecordDate = dBEntry(1).RecordDate;
+            
+            % Check that all the data is OK
+            if ~all( arrayfun( @(x) strcmp( x.SubjectID, E.SubjectID ), dBEntry ) )
+                error( 'Ethome:multipleSubjects', ...
+                    'The database entries contain more than one subject.' );
+            end
+            
+            if ~all( arrayfun( @(x) strcmp( x.SettingID, E.SettingID ), dBEntry ) )
+                error( 'Ethome:multipleSubjects', ...
+                    'The database entries contain multiple settings.' );
+            end
+            
+            mods = arrayfun( @(x) x.FileType, dBEntry, 'UniformOutput', false );
+            uMods = unique( mods );
+            
+            for k = 1:numel( uMods )
+                ix = strcmp( mods, uMods{k} );
+                switch uMods{k}
+                    case 'LeftHandData'
+                        E.LeftHand = Glove( dBEntry(ix) );
+                    case 'RightHandData'
+                        E.RightHand = Glove( dBEntry(ix) );
+                    case 'SuitData'
+                        E.Suit = Suit( dBEntry(ix) ); % Call to class constructor Suit, not property
+                    case 'SuitTime'
+                        % Do nothing, treated by Suit;
+                    case 'GazeData'
+                         E.Gaze = Gaze( dBEntry(ix) );
+                    case 'ConvertedGazeIDF'
+                         IDFGaze = SMIRawParserErrHand(dBEntry(ix).FileName);
+                    case 'ActivityLog'
+                        E.Annotation = Annotation( dBEntry(ix) );
+                    case 'GazeSceneVideo'
+                         E.SceneVideo=SceneVideo(dBEntry(ix));
+                    otherwise
+                        warning( 'Ethome:NotImplemented', ...
+                            [uMods{k} ' has not been implemented yet. Skipping...'] )
+                end;
+            end
+            
+            if (~isempty(IDFGaze))
+                if (~isempty(E.Gaze))
+                    E.Gaze.AddIDFData(IDFGaze);
+                else
+                    E.Gaze=Gaze;
+                    E.Gaze.AddIDFData(IDFGaze);                    
+                end
+                E.Gaze.SyncIDF;
+                        
+            end
+            
+            
+        end
+        
+    end
+    
+    methods
+        addData( E, dBEntry );
+        Sync( E, Fs );
+        fuseHeadNGaze(E);
+        out = Data2XYZ( E )
+        ix = dataIndex( E, name );
+        dataLabels = makeDataLabels( E, modalities );
+        
+    end
+end
