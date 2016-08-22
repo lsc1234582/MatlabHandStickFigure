@@ -1,10 +1,11 @@
-function LoadAndPlay(dat)
+function LoadAndPlay(dat, cal, bvh, mod, fs)
 
 %Y = load(dat);
 %Y = Y.X;
 Y = dat(:, 2:23);
-Y = calibrateData(Y, '/home/sicong/Documents/MATLAB/HandCalibrationsonly/HandCalibrationsonly/201309211/RightHand.cal');
-[HandSkel, HandChannels, HandFs] = bvhReadFile('HandBase3.bvh');
-HandChannels = modifyChannel(Y);
+Y = calibrateData(Y, cal);
+Y = Y*180/pi;
+[HandSkel, HandChannels, HandFs] = bvhReadFile(bvh);
+HandChannels = mod(Y);
 
-bvhPlayData(HandSkel, HandChannels, 0.01);
+bvhPlayData(HandSkel, HandChannels, fs);

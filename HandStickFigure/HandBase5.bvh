@@ -1,0 +1,117 @@
+HIERARCHY
+ROOT forearm
+{
+    OFFSET 200 -0.224670 0.000001
+    CHANNELS 6 Xposition Yposition Zposition Xrotation Yrotation Zrotation
+    JOINT wrist
+    {
+        OFFSET -182.085037 0 0
+        CHANNELS 3 Xrotation Yrotation Zrotation
+        JOINT handbone
+        {
+            OFFSET -79.446518 5.274386 -13.494767
+            CHANNELS 3 Xrotation Yrotation Zrotation
+            JOINT thumblower
+            {
+                OFFSET 47.4029 42.1899 11.7122
+                CHANNELS 6 Xposition Yposition Zposition Xrotation Yrotation Zrotation
+                JOINT thumbmiddle
+                {
+                    OFFSET -29.663914 2.1992798 7.593588
+                    CHANNELS 3 Xrotation Yrotation Zrotation
+                    JOINT thumbtop
+                    {
+                        OFFSET -31.442574 2.7200466 4.000887
+                        CHANNELS 3 Xrotation Yrotation Zrotation
+                        End Site
+                        {
+                            OFFSET -15.483565 1.7937134 4.214972
+                        }
+                    }
+                }
+            }
+
+            JOINT indexlower
+            {
+                OFFSET -27.610151 27.215357 10.031754
+                CHANNELS 6 Xposition Yposition Zposition Xrotation Yrotation Zrotation
+                JOINT indexmiddle
+                {
+                    OFFSET -36.039116 7.156580 -0.237765
+                    CHANNELS 3 Xrotation Yrotation Zrotation
+                    JOINT indextop
+                    {
+                        OFFSET -34.550667 3.887501 -0.676123
+                        CHANNELS 3 Xrotation Yrotation Zrotation
+                        End Site
+                        {
+                            OFFSET -20.232880 1.910034 -2.113411
+                        }
+                    }
+                }
+            }
+            JOINT middlelower
+            {
+                OFFSET -33.072830 4.725623 9.122853
+                CHANNELS 6 Xposition Yposition Zposition Xrotation Yrotation Zrotation
+                JOINT middlemiddle
+                {
+                    OFFSET -41.604553 -0.890238 -1.414906
+                    CHANNELS 3 Xrotation Yrotation Zrotation
+                    JOINT middletop
+                    {
+                        OFFSET -32.933449 -1.193488 0.545149
+                        CHANNELS 3 Xrotation Yrotation Zrotation
+                        End Site
+                        {
+                            OFFSET -19.312828 -0.193849 -2.766104
+                        }
+                    }
+                }
+            }
+
+            JOINT ringlower
+            {
+                OFFSET -27.751472 -17.756046 9.423440
+                CHANNELS 6 Xposition Yposition Zposition Xrotation Yrotation Zrotation
+                JOINT ringmiddle
+                {
+                    OFFSET -38.834938 -0.5653360 -4.089293
+                    CHANNELS 3 Xrotation Yrotation Zrotation
+                    JOINT ringtop
+                    {
+                        OFFSET -34.353310 -0.5708067 -1.338019
+                        CHANNELS 3 Xrotation Yrotation Zrotation
+                        End Site
+                        {
+                            OFFSET -20.397255 -0.2675426 -1.580985
+                        }
+                    }
+                }
+            }
+            JOINT pinkylower
+            {
+                OFFSET -16.568052 -37.329994 13.313303
+                CHANNELS 6 Xposition Yposition Zposition Xrotation Yrotation Zrotation
+                JOINT pinkymiddle
+                {
+                    OFFSET -32.957144 -1.2526093 0.604743
+                    CHANNELS 3 Xrotation Yrotation Zrotation
+                    JOINT pinkytop
+                    {
+                        OFFSET -25.235508 -0.9966892 -0.428967
+                        CHANNELS 3 Xrotation Yrotation Zrotation
+                        End Site
+                        {
+                            OFFSET -16.827278 -0.6961704 -0.213587
+                        }
+                    }
+                }
+            }
+        }
+	}
+}
+MOTION
+Frames: 258
+Frame Time: 0.016667
+-1.35577 -0.22467 -0.00000 0 0 0 0 0 0  0 0 0 0 0 0 0 0 0 -36.47891 2.50094 10.39955 0 0 0 0 0 0 0 0 0 -22.98663 -34.68987 38.30723 0 0 0 0 0 0 0 0 0 -30.70927 -14.37198 24.05573 0 0 0 0 0 0 0 0 0 34.38391 35.78230 39.04551 0 0 0 0 0 0 0 0 0 0 0 0 

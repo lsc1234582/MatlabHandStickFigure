@@ -14,7 +14,7 @@ if ischar( cal )
 end
 
 X = bsxfun( @minus, X, cal(:, 1)' );
-%X = bsxfun( @times, X, cal(:, 2)' );
+X = bsxfun( @times, X, cal(:, 2)' );
 end
 
 function cal = loadCal( fileName, hand )
