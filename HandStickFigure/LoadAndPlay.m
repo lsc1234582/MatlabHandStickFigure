@@ -1,4 +1,4 @@
-function LoadAndPlay(dat, cal, bvh, mod, fs)
+function LoadAndPlay(dat, cal, bvh, mod, fl)
 
 %Y = load(dat);
 %Y = Y.X;
@@ -8,4 +8,4 @@ Y = Y*180/pi;
 [HandSkel, HandChannels, HandFs] = bvhReadFile(bvh);
 HandChannels = mod(Y);
 
-bvhPlayData(HandSkel, HandChannels, fs);
+bvhPlayData(HandSkel, HandChannels, fl);
