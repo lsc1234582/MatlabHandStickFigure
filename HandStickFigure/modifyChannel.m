@@ -1,16 +1,16 @@
-function modifiedCh = modifyChannel(ch, para, adj)
+function modifiedCh = modifyChannel(ch, fingerAbdW, chAdj)
 % Extra chanel for Zrotation for index lower joint
 % After testing para is best to be set [1,0;0,1;0,1]
-if nargin < 2
-    para = [1,0;0,1;0,1];
+if isempty(fingerAbdW)
+    fingerAbdW = [1,0;0,1;0,1];
 end
-if nargin < 3
-    adj = zeros(1, 22);
+if isempty(chAdj)
+    chAdj = zeros(1, 22);
 end
 
 % A little bit of magic
-neg_dang = [para(1,1)*ch(:, 11), para(2,1)*ch(:, 15), para(3,1)*ch(:, 19)];
-pos_dang = [para(1,2)*ch(:, 11), para(2,2)*ch(:, 15), para(3,2)*ch(:, 19)];
+neg_dang = [fingerAbdW(1,1)*ch(:, 11), fingerAbdW(2,1)*ch(:, 15), fingerAbdW(3,1)*ch(:, 19)];
+pos_dang = [fingerAbdW(1,2)*ch(:, 11), fingerAbdW(2,2)*ch(:, 15), fingerAbdW(3,2)*ch(:, 19)];
 
 abs_abd = [neg_dang(:, 1), neg_dang(:, 2:3) - pos_dang(:, 1:2), -pos_dang(:, 3)];
 

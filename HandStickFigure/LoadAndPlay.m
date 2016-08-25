@@ -1,15 +1,22 @@
-function LoadAndPlay(Y, bvh, frameRate, para, des)
+function LoadAndPlay(channels, bvh, frameRate, varargin)
+p = inputParser;
+p.addRequired('channels');
+p.addRequired('bvh');
+p.addRequired('frameRate');
+p.addParameter('outputName', '');
+p.addParameter('fingerAbdWeights', [], @(x)isequal(size(x), [3,2]));
+p.addParameter('channelAdj', []);
 
-[HandSkel, Ignore, Ignore] = bvhReadFile(bvh);
+p.parse(channels, bvh, frameRate, varargin{:});
 
-if nargin < 4
-    HandChannels = modifyChannel(Y);
+[handSkel, ignore_, ignore_] = bvhReadFile(p.Results.bvh);
+
+handChannels = modifyChannel(p.Results.channels, ...
+    p.Results.fingerAbdWeights, p.Results.channelAdj);
+
+if isempty(p.Results.outputName)
+    bvhPlayData(handSkel, handChannels, 1/p.Results.frameRate);
 else
-    HandChannels = modifyChannel(Y, para);
-end
-
-if nargin < 5
-    bvhPlayData(HandSkel, HandChannels, 1/frameRate);
-else
-    skelPlayAndSaveData(HandSkel, HandChannels, frameRate, des);
+    skelPlayAndSaveData(handSkel, handChannels, p.Results.frameRate, ...
+        p.Results.outputName);
 end
