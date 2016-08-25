@@ -1,7 +1,12 @@
-function LoadAndPlay(Y, bvh, para, frameRate, des)
+function LoadAndPlay(Y, bvh, frameRate, para, des)
 
 [HandSkel, Ignore, Ignore] = bvhReadFile(bvh);
-HandChannels = modifyChannel(Y, para);
+
+if nargin < 4
+    HandChannels = modifyChannel(Y);
+else
+    HandChannels = modifyChannel(Y, para);
+end
 
 if nargin < 5
     bvhPlayData(HandSkel, HandChannels, 1/frameRate);
