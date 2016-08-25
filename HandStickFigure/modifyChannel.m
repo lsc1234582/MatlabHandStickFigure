@@ -1,9 +1,12 @@
-function modifiedCh = modifyChannel(ch, para)
+function modifiedCh = modifyChannel(ch, para, adj)
 % Extra chanel for Zrotation for index lower joint
 % After testing para is best to be set [1,0;0,1;0,1]
-
-ch_size = size(ch);
-padding = zeros(ch_size(1), 10);
+if nargin < 2
+    para = [1,0;0,1;0,1];
+end
+if nargin < 3
+    adj = zeros(1, 22);
+end
 
 % A little bit of magic
 neg_dang = [para(1,1)*ch(:, 11), para(2,1)*ch(:, 15), para(3,1)*ch(:, 19)];
@@ -13,6 +16,9 @@ abs_abd = [neg_dang(:, 1), neg_dang(:, 2:3) - pos_dang(:, 1:2), -pos_dang(:, 3)]
 
 ch = [ch(:, 1:7), abs_abd(:, 1), ch(:, 8:10), abs_abd(:, 2), ch(:, 12:14), ...
     abs_abd(:, 3), ch(:, 16:18), abs_abd(:, 4), ch(:, 20:22)];
+
+ch_size = size(ch);
+padding = zeros(ch_size(1), 10);
 
 modifiedCh = [padding(:,1:6), ...
     padding(:,1), ch(:,22:23), ...

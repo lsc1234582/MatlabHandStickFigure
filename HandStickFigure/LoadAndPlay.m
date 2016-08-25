@@ -1,8 +1,10 @@
-function LoadAndPlay(Y, cal, bvh, para, fl)
+function LoadAndPlay(Y, bvh, para, frameRate, des)
 
-Y = calibrateData(Y, cal);
-Y = Y*180/pi;
 [HandSkel, Ignore, Ignore] = bvhReadFile(bvh);
 HandChannels = modifyChannel(Y, para);
 
-bvhPlayData(HandSkel, HandChannels, fl);
+if nargin < 5
+    bvhPlayData(HandSkel, HandChannels, 1/frameRate);
+else
+    skelPlayAndSaveData(HandSkel, HandChannels, frameRate, des);
+end

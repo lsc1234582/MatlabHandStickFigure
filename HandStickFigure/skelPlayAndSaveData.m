@@ -1,4 +1,4 @@
-function skelPlayAndSaveData(skelStruct, channels, framerate, des)
+function skelPlayAndSaveData(skelStruct, channels, frameRate, des)
 
 % SKELPLAYDATA Play skel motion capture data.
 %
@@ -22,7 +22,7 @@ function skelPlayAndSaveData(skelStruct, channels, framerate, des)
 % 	last update 2008-08-12T20:23:47.000000Z
 
 if nargin < 3
-  framerate = 120;
+  frameRate = 120;
 end
 clf
 
@@ -60,7 +60,7 @@ j = 1;
 % Play the motion
 %a = tic;
 v = VideoWriter(des);
-v.FrameRate = framerate;
+v.FrameRate = frameRate;
 open(v);
 while j ~=  movieLength
   %b = toc(a);
