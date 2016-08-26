@@ -1,4 +1,4 @@
-function LoadAndPlay(channels, bvh, frameRate, varargin)
+function playBackBVH(channels, bvh, frameRate, varargin)
 p = inputParser;
 p.addRequired('channels');
 p.addRequired('bvh');
