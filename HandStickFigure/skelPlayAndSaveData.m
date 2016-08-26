@@ -26,47 +26,27 @@ if nargin < 3
 end
 clf
 
-handle = skelVisualise(channels(1, :), skelStruct);
-
-
-% Get the limits of the motion.
-xlim = get(gca, 'xlim');
-minY1 = xlim(1);
-maxY1 = xlim(2);
-ylim = get(gca, 'ylim');
-minY3 = ylim(1);
-maxY3 = ylim(2);
-zlim = get(gca, 'zlim');
-minY2 = zlim(1);
-maxY2 = zlim(2);
-for i = 1:size(channels, 1)
-  Y = skel2xyz(skelStruct, channels(i, :));
-  minY1 = min([Y(:, 1); minY1]);
-  minY2 = min([Y(:, 2); minY2]);
-  minY3 = min([Y(:, 3); minY3]);
-  maxY1 = max([Y(:, 1); maxY1]);
-  maxY2 = max([Y(:, 2); maxY2]);
-  maxY3 = max([Y(:, 3); maxY3]);
-end
-xlim = [minY1 maxY1];
-ylim = [minY3 maxY3];
-zlim = [minY2 maxY2];
-set(gca, 'xlim', xlim, ...
-         'ylim', ylim, ...
-         'zlim', zlim);
+handle = skelVisualise4View(channels, skelStruct);
 
 movieLength = size(channels, 1);
 j = 1;
 % Play the motion
 %a = tic;
-v = VideoWriter(des);
+profile = 'MPEG-4';
+if isunix
+    profile = 'Motion JPEG AVI';
+end
+v = VideoWriter(des, profile);
 v.FrameRate = frameRate;
 open(v);
+a = tic;
 while j ~=  movieLength
   %b = toc(a);
   %if b > frameLength
-  skelModify(handle, channels(j, :), skelStruct);
-  drawnow
+  for i = 1:4
+    skelModify(handle(i, :), channels(j, :), skelStruct);
+  end
+  drawnow;
   j = j + 1;
   writeVideo(v, getframe(gcf));
   %a = tic;
@@ -74,6 +54,6 @@ while j ~=  movieLength
   %pause(frameLength);
   
   %frames(j) = getframe(gcf);
-  
 end
+b = toc(a)
 close(v);
