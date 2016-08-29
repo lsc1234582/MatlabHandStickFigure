@@ -41,16 +41,25 @@ for i = 1:length(skel.tree)
     yangle = 0;
     zangle = 0;
   else
-    xangle = deg2rad(channels(skel.tree(i).rotInd(1)));
     if length(skel.tree(i).rotInd) == 3
+        if skel.tree(i).rotInd(1) == 0
+            xangle = 0;
+        else
+            xangle = deg2rad(channels(skel.tree(i).rotInd(1)));
+        end
         if skel.tree(i).rotInd(2) == 0
             yangle = 0;
         else
             yangle = deg2rad(channels(skel.tree(i).rotInd(2)));
         end
-        zangle = deg2rad(channels(skel.tree(i).rotInd(3)));
+        if skel.tree(i).rotInd(3) == 0
+            zangle = 0;
+        else
+            zangle = deg2rad(channels(skel.tree(i).rotInd(3)));
+        end
     else
-        yangle = 0;
+        xangle = 0;
+        yangle = deg2rad(channels(skel.tree(i).rotInd(2)));
         zangle = 0;
         
     end

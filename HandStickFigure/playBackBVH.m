@@ -11,7 +11,7 @@ p.parse(channels, bvh, frameRate, varargin{:});
 
 [handSkel, ignore_, ignore_] = bvhReadFile(p.Results.bvh);
 
-handChannels = modifyChannel(p.Results.channels, ...
+handChannels = modifyChannel2(p.Results.channels, ...
     p.Results.fingerAbdWeights, p.Results.channelAdj);
 
 if isempty(p.Results.outputName)
