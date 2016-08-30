@@ -10,17 +10,19 @@ p.addParameter('lhFingerAbdWeights', [], @(x)isequal(size(x), [3,2]));
 p.addParameter('lhChannelAdj', []);
 p.addParameter('rhFingerAbdWeights', [], @(x)isequal(size(x), [3,2]));
 p.addParameter('rhChannelAdj', []);
-
+p.addParameter('range', []);
 p.parse(ethome, lhSkel, rhSkel, lhCal, rhCal, varargin{:});
 ethome = p.Results.ethome;
-channels.suit = ethome.Data(40000:41000, find(strcmp(ethome.DataLabels(2, :), 'Suit')));
+channels.suit = ethome.Data(p.Results.range, find(strcmp(ethome.DataLabels(2, :), 'Suit')));
 channels.suit(isnan(channels.suit)) = 0;
-channels.leftHand = ethome.Data(40000:41000, find(strcmp(ethome.DataLabels(2, :), 'LeftHand')));
+channels.leftHand = ethome.Data(p.Results.range, find(strcmp(ethome.DataLabels(2, :), 'LeftHand')));
 channels.leftHand(isnan(channels.suit)) = 0;
-channels.rightHand = ethome.Data(40000:41000, find(strcmp(ethome.DataLabels(2, :), 'RightHand')));
+channels.rightHand = ethome.Data(p.Results.range, find(strcmp(ethome.DataLabels(2, :), 'RightHand')));
 channels.rightHand(isnan(channels.suit)) = 0;
 
 skelStruct.suit = ethome.Suit.Skel;
+[lhSkel, ignore, ignore] = bvhReadFile(lhSkel);
+[rhSkel, ignore, ignore] = bvhReadFile(rhSkel);
 skelStruct.leftHand = lhSkel;
 skelStruct.rightHand = rhSkel;
 

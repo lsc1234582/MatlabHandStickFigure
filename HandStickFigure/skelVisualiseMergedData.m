@@ -23,11 +23,11 @@ function poses = skelVisualiseMergedData(channels, skelStruct)
 % 	last update 2008-01-12T11:32:50.000000Z
 
 lhView = getViewportContent(channels.leftHand, skelStruct.leftHand, ...
-    {'Top', 'Normal'}, {1, 2}, {[0, 90], 3});
+    {'Left Hand Top', 'Left Hand Normal'}, {1, 2}, {[0, 90], 3});
 rhView = getViewportContent(channels.rightHand, skelStruct.rightHand, ...
-    {'Top', 'Normal'}, {4, 5}, {[0, 90], 3});
+    {'Right Hand Top', 'Right Hand Normal'}, {4, 5}, {[0, 90], 3});
 suitView = getViewportContent(channels.suit, skelStruct.suit, ...
-    {'Normal'}, {[3, 6]}, {3});
+    {'Body Normal'}, {[3, 6]}, {3});
 
 set(gcf, 'pos', [100,100,1500,700]);
 
