@@ -17,6 +17,15 @@ for j = 1:length(viewport.titles)
            [viewport.vals(viewport.I(i), 3) viewport.vals(viewport.J(i), 3)], ...
            [viewport.vals(viewport.I(i), 2) viewport.vals(viewport.J(i), 2)]);
       set(poses(count).handles(i+1), 'linewidth', 2);
+      if strcmp(viewport.side(i), 'Left')
+          set(poses(count).handles(i+1), 'color', 'blue');
+      else
+          if strcmp(viewport.side(i), 'Right')
+              set(poses(count).handles(i+1), 'color', 'red');
+          else
+              set(poses(count).handles(i+1), 'color', 'green');
+          end
+      end
     end
     axis equal
     xlabel('x')

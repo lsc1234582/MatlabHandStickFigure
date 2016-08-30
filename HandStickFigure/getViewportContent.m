@@ -7,6 +7,7 @@ viewport.connect = skelConnectionMatrix(skel);
 
 viewport.indices = find(viewport.connect);
 [viewport.I, viewport.J] = ind2sub(size(viewport.connect), viewport.indices);
+viewport.side = getSkelSide(skel, viewport.I, viewport.J);
 
 % Get the limits of the motion.
 viewport.minX = min(viewport.vals(:, 1));
@@ -24,12 +25,12 @@ for i = 2:size(channels, 1)
   viewport.maxY = max([Y(:, 2); viewport.maxY]);
   viewport.maxZ = max([Y(:, 3); viewport.maxZ]);
 end
-viewport.minX = viewport.minX + (viewport.minX/abs(viewport.minX)) * 20;
-viewport.maxX = viewport.maxX + (viewport.maxX/abs(viewport.maxX)) * 20;
-viewport.minY = viewport.minY + (viewport.minY/abs(viewport.minY)) * 20;
-viewport.maxY = viewport.maxY + (viewport.maxY/abs(viewport.maxY)) * 20;
-viewport.minZ = viewport.minZ + (viewport.minZ/abs(viewport.minZ)) * 20;
-viewport.maxZ = viewport.maxZ + (viewport.maxZ/abs(viewport.maxZ)) * 20;
+viewport.minX = viewport.minX - 20;
+viewport.maxX = viewport.maxX + 20;
+viewport.minY = viewport.minY - 20;
+viewport.maxY = viewport.maxY + 20;
+viewport.minZ = viewport.minZ - 20;
+viewport.maxZ = viewport.maxZ + 20;
 
 viewport.titles = titles;
 viewport.locations = locs;

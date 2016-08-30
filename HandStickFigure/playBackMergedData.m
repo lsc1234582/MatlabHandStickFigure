@@ -15,10 +15,14 @@ p.parse(ethome, lhSkel, rhSkel, lhCal, rhCal, varargin{:});
 ethome = p.Results.ethome;
 channels.suit = ethome.Data(p.Results.range, find(strcmp(ethome.DataLabels(2, :), 'Suit')));
 channels.suit(isnan(channels.suit)) = 0;
+% Fix hip position(x,z)
+channels.suit(:, 1) = 0;
+channels.suit(:, 3) = 0;
 channels.leftHand = ethome.Data(p.Results.range, find(strcmp(ethome.DataLabels(2, :), 'LeftHand')));
 channels.leftHand(isnan(channels.suit)) = 0;
 channels.rightHand = ethome.Data(p.Results.range, find(strcmp(ethome.DataLabels(2, :), 'RightHand')));
 channels.rightHand(isnan(channels.suit)) = 0;
+
 
 skelStruct.suit = ethome.Suit.Skel;
 [lhSkel, ignore, ignore] = bvhReadFile(lhSkel);
@@ -29,7 +33,7 @@ skelStruct.rightHand = rhSkel;
 channels.leftHand = calibrateData(channels.leftHand, lhCal) * 180 / pi;
 channels.rightHand = calibrateData(channels.rightHand, rhCal) * 180 / pi;
 
-channels.leftHand = modifyLHChannel(channels.leftHand, ...
+channels.leftHand = modifyChannel2(channels.leftHand, ...
     p.Results.lhFingerAbdWeights, p.Results.lhChannelAdj);
 
 channels.rightHand = modifyChannel2(channels.rightHand, ...
@@ -38,6 +42,6 @@ channels.rightHand = modifyChannel2(channels.rightHand, ...
 if isempty(p.Results.outputName)
     bvhPlayData(handSkel, handChannels, 1/p.Results.frameRate);
 else
-    skelPlayAndSaveMergedData(skelStruct, channels, 50, ...
+    skelPlayAndSaveMergedData(skelStruct, channels, 24, ...
         p.Results.outputName);
 end
