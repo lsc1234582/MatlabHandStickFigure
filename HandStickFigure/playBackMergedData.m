@@ -39,9 +39,16 @@ channels.leftHand = modifyChannel2(channels.leftHand, ...
 channels.rightHand = modifyChannel2(channels.rightHand, ...
     p.Results.rhFingerAbdWeights, p.Results.rhChannelAdj);
 
+% Get Frame rate
+frameGaps = ethome.Time(2:end) - ethome.Time(1:end-1);
+meanFrameGap = mean(frameGaps);
+frameGapErrorSum = sum(frameGaps - meanFrameGap);
+disp(['Frame Gap Error Sum: ', num2str(frameGapErrorSum)]);
+frameRate = 1000/meanFrameGap
+
 if isempty(p.Results.outputName)
     bvhPlayData(handSkel, handChannels, 1/p.Results.frameRate);
 else
-    skelPlayAndSaveMergedData(skelStruct, channels, 24, ...
+    skelPlayAndSaveMergedData(skelStruct, channels, frameRate, ...
         p.Results.outputName);
 end

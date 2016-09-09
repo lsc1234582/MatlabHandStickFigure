@@ -27,7 +27,12 @@ for i = 2:size(channels, 1)
 end
 viewport.minX = viewport.minX - 20;
 viewport.maxX = viewport.maxX + 20;
-viewport.minY = viewport.minY - 20;
+% Hardcoded min Y
+if any(cell2mat(strfind(lower(titles), 'body')))
+    viewport.minY = -20;
+else
+    viewport.minY = viewport.minY - 20;
+end
 viewport.maxY = viewport.maxY + 20;
 viewport.minZ = viewport.minZ - 20;
 viewport.maxZ = viewport.maxZ + 20;
