@@ -13,21 +13,21 @@ p.addParameter('rhChannelAdj', []);
 p.addParameter('range', []);
 p.parse(ethome, lhSkel, rhSkel, lhCal, rhCal, varargin{:});
 ethome = p.Results.ethome;
-channels.suit = ethome.Data(p.Results.range, find(strcmp(ethome.DataLabels(2, :), 'Suit')));
+channels.suit = ethome.Data(p.Results.range, strcmp(ethome.DataLabels(2, :), 'Suit'));
 channels.suit(isnan(channels.suit)) = 0;
 % Fix hip position(x,z)
 channels.suit(:, 1) = 0;
 channels.suit(:, 3) = 0;
-channels.leftHand = ethome.Data(p.Results.range, find(strcmp(ethome.DataLabels(2, :), 'LeftHand')));
+channels.leftHand = ethome.Data(p.Results.range, strcmp(ethome.DataLabels(2, :), 'LeftHand'));
 channels.leftHand(isnan(channels.suit)) = 0;
-channels.rightHand = ethome.Data(p.Results.range, find(strcmp(ethome.DataLabels(2, :), 'RightHand')));
+channels.rightHand = ethome.Data(p.Results.range, strcmp(ethome.DataLabels(2, :), 'RightHand'));
 channels.rightHand(isnan(channels.suit)) = 0;
 
 % If time is in ethome.Data
-if isempty(find(strcmp(ethome.Datalabels(1, :), 'System_Time')))
-    systemTime = ethome.Data(p.Results.range, find(strcmp(ethome.DataLabels(1, :), 'System_Time')));
-else
+if isempty(find(strcmp(ethome.DataLabels(1, :), 'System_Time'), 1))
     systemTime = ethome.Time;
+else
+    systemTime = ethome.Data(p.Results.range, strcmp(ethome.DataLabels(1, :), 'System_Time'));
 end
 systemTime(isnan(systemTime)) = [];
 
