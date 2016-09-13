@@ -23,6 +23,13 @@ channels.leftHand(isnan(channels.suit)) = 0;
 channels.rightHand = ethome.Data(p.Results.range, find(strcmp(ethome.DataLabels(2, :), 'RightHand')));
 channels.rightHand(isnan(channels.suit)) = 0;
 
+% If time is in ethome.Data
+if isempty(find(strcmp(ethome.Datalabels(1, :), 'System_Time')))
+    systemTime = ethome.Data(p.Results.range, find(strcmp(ethome.DataLabels(1, :), 'System_Time')));
+else
+    systemTime = ethome.Time;
+end
+systemTime(isnan(systemTime)) = [];
 
 skelStruct.suit = ethome.Suit.Skel;
 [lhSkel, ignore, ignore] = bvhReadFile(lhSkel);
@@ -40,7 +47,7 @@ channels.rightHand = modifyChannel2(channels.rightHand, ...
     p.Results.rhFingerAbdWeights, p.Results.rhChannelAdj);
 
 % Get Frame rate
-frameGaps = ethome.Time(2:end) - ethome.Time(1:end-1);
+frameGaps = systemTime(2:end) - systemTime(1:end-1);
 meanFrameGap = mean(frameGaps);
 frameGapErrorSum = sum(frameGaps - meanFrameGap);
 disp(['Frame Gap Error Sum: ', num2str(frameGapErrorSum)]);
