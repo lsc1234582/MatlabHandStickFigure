@@ -29,7 +29,7 @@ rhView = getViewportContent(channels.rightHand, skelStruct.rightHand, ...
 suitView = getViewportContent(channels.suit, skelStruct.suit, ...
     {'Body Front', 'Body Normal'}, {2, 5}, {[0, 0], 3})
 
-set(gcf, 'pos', [100,100,1500,700]);
+set(gcf, 'pos', [100,100,1440,900]);
 
 count = 1;
 % Pre-allocate struct array

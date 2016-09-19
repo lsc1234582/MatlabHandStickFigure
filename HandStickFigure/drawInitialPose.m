@@ -6,7 +6,7 @@ for j = 1:length(viewport.titles)
     poses(count).skel = viewport.skel;
     poses(count).channels = viewport.channels;
     view(viewport.orientations{j});
-    title(viewport.titles{j});
+    title(viewport.titles{j}, 'FontSize', 20);
     axis ij
     set(poses(count).handles(1), 'markersize', 20);
     hold on
