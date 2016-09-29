@@ -1,6 +1,6 @@
-function [poses, count] = drawInitialPose(viewport, count, poses)
+function [poses, count] = drawInitialPose(viewport, count, poses, viewDim)
 for j = 1:length(viewport.titles)
-    subplot(2, 3, viewport.locations{j});
+    subplot(viewDim(1), viewDim(2), viewport.locations{j});
     poses(count).handles(1) = plot3(viewport.vals(:, 1), viewport.vals(:, 3),...
         viewport.vals(:, 2), '.');
     poses(count).skel = viewport.skel;

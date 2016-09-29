@@ -1,4 +1,4 @@
-function poses = skelVisualiseMergedData(channels, skelStruct)
+function poses = skelVisualiseMergedData(dataViews, gcfPos)
 
 % SKELVISUALISE For drawing a skel representation of 3-D data.
 %
@@ -22,20 +22,24 @@ function poses = skelVisualiseMergedData(channels, skelStruct)
 % 	skelVisualise.m SVN version 30
 % 	last update 2008-01-12T11:32:50.000000Z
 
-lhView = getViewportContent(channels.leftHand, skelStruct.leftHand, ...
-    {'Left Hand Top', 'Left Hand Front'}, {1, 4}, {[180, 90], [180, 0]});
-rhView = getViewportContent(channels.rightHand, skelStruct.rightHand, ...
-    {'Right Hand Top', 'Right Hand Front'}, {3, 6}, {[0, 90], [0, 0]});
-suitView = getViewportContent(channels.suit, skelStruct.suit, ...
-    {'Body Front', 'Body Normal'}, {2, 5}, {[0, 0], 3})
+set(gcf, 'pos', gcfPos);
 
-set(gcf, 'pos', [100,100,1440,900]);
 
 count = 1;
-% Pre-allocate struct array
-poses(5).handles = [];
 
-[poses, count] = drawInitialPose(lhView, count, poses);
-[poses, count] = drawInitialPose(rhView, count, poses);
-[poses, count] = drawInitialPose(suitView, count, poses);
+poses = [];
+
+for i = 1:length(dataViews)
+    viewInfoLength = [length(dataViews(i).titles), length(dataViews(i).locs), ...
+       length(dataViews(i).orients)];
+   
+    if ~isequal(viewInfoLength(1), viewInfoLength(2), viewInfoLength(3)) || ...
+            any(viewInfoLength == 0)
+        disp('Incomplete viewport info(titles, subplot locations or subplot orientations');
+    else
+        view = getViewportContent(dataViews(i).channel, dataViews(i).skelStruct, ...
+        dataViews(i).titles, dataViews(i).locs, dataViews(i).orients);
+        [poses, count] = drawInitialPose(view, count, poses, dataViews(i).viewDim);
+    end
+end
 

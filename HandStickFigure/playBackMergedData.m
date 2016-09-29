@@ -13,15 +13,21 @@ p.addParameter('rhChannelAdj', []);
 p.addParameter('range', []);
 p.parse(ethome, lhSkel, rhSkel, lhCal, rhCal, varargin{:});
 ethome = p.Results.ethome;
-channels.suit = ethome.Data(p.Results.range, strcmp(ethome.DataLabels(2, :), 'Suit'));
-channels.suit(isnan(channels.suit)) = 0;
-% Fix hip position(x,z)
-channels.suit(:, 1) = 0;
-channels.suit(:, 3) = 0;
-channels.leftHand = ethome.Data(p.Results.range, strcmp(ethome.DataLabels(2, :), 'LeftHand'));
-channels.leftHand(isnan(channels.suit)) = 0;
-channels.rightHand = ethome.Data(p.Results.range, strcmp(ethome.DataLabels(2, :), 'RightHand'));
-channels.rightHand(isnan(channels.suit)) = 0;
+
+dataViews(1) = getSuitDataView(ethome.Data(p.Results.range, ...
+    strcmp(ethome.DataLabels(2, :), 'Suit')), ethome.Suit.Skel, ...
+    'titles', {'Body Front', 'Body Normal'}, 'locs', {2, 5}, ...
+    'orients', {[180, 0], 3}, 'viewDim', [2, 3]);
+
+dataViews(2) = getHandDataView(ethome.Data(p.Results.range, ...
+    strcmp(ethome.DataLabels(2, :), 'LeftHand')), lhSkel, lhCal, ...
+    'titles', {'LeftHand Top', 'LeftHand Front'}, 'locs', {1, 4}, ...
+    'orients', {[180, 90], [180, 0]}, 'viewDim', [2, 3]);
+
+dataViews(3) = getHandDataView(ethome.Data(p.Results.range, ...
+    strcmp(ethome.DataLabels(2, :), 'RightHand')), rhSkel, rhCal, ...
+    'titles', {'RightHand Top', 'RightHand Front'}, 'locs', {3, 6}, ...
+    'orients', {[0, 90], [180, 0]}, 'viewDim', [2, 3]);
 
 % If time is in ethome.Data
 if isempty(find(strcmp(ethome.DataLabels(1, :), 'System_Time'), 1))
@@ -31,21 +37,6 @@ else
 end
 systemTime(isnan(systemTime)) = [];
 
-skelStruct.suit = ethome.Suit.Skel;
-[lhSkel, ignore, ignore] = bvhReadFile(lhSkel);
-[rhSkel, ignore, ignore] = bvhReadFile(rhSkel);
-skelStruct.leftHand = lhSkel;
-skelStruct.rightHand = rhSkel;
-
-channels.leftHand = calibrateData(channels.leftHand, lhCal) * 180 / pi;
-channels.rightHand = calibrateData(channels.rightHand, rhCal) * 180 / pi;
-
-channels.leftHand = modifyHandChannel(channels.leftHand, ...
-    p.Results.lhFingerAbdWeights, p.Results.lhChannelAdj);
-
-channels.rightHand = modifyHandChannel(channels.rightHand, ...
-    p.Results.rhFingerAbdWeights, p.Results.rhChannelAdj);
-
 % Get Frame rate
 frameGaps = systemTime(2:end) - systemTime(1:end-1);
 meanFrameGap = mean(frameGaps);
@@ -54,8 +45,8 @@ disp(['Frame Gap Error Sum: ', num2str(frameGapErrorSum)]);
 frameRate = 1000/meanFrameGap
 
 if isempty(p.Results.outputName)
-    bvhPlayData(handSkel, handChannels, 1/p.Results.frameRate);
+    skelPlayAndSaveMergedData(dataViews, 'frameRate', frameRate);
 else
-    skelPlayAndSaveMergedData(skelStruct, channels, frameRate, ...
-        p.Results.outputName);
+    skelPlayAndSaveMergedData(dataViews, 'frameRate', frameRate, ...
+        'des', p.Results.outputName);
 end

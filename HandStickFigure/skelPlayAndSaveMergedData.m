@@ -1,4 +1,4 @@
-function skelPlayAndSaveMergedData(skelStruct, channels, frameRate, des)
+function skelPlayAndSaveMergedData(dataViews, varargin)
 
 % SKELPLAYDATA Play skel motion capture data.
 %
@@ -21,40 +21,53 @@ function skelPlayAndSaveMergedData(skelStruct, channels, frameRate, des)
 % 	skelPlayData.m SVN version 42
 % 	last update 2008-08-12T20:23:47.000000Z
 
-if nargin < 3
-  frameRate = 120;
+p = inputParser;
+p.addRequired('dataViews');
+p.addParameter('des', '');
+p.addParameter('frameRate', 120);
+p.addParameter('gcfPos', [100,100,1440,900]);
+
+clf;
+p.parse(dataViews, varargin{:});
+
+poses = skelVisualiseMergedData(dataViews, p.Results.gcfPos);
+
+movieLength = 0;
+
+for i = 1:length(dataViews)
+   if movieLength < size(dataViews(i).channel, 1)
+       movieLength = size(dataViews(i).channel, 1)
+   end
 end
-clf
 
-poses = skelVisualiseMergedData(channels, skelStruct);
-
-movieLength = size(channels.rightHand, 1);
 j = 1;
 % Play the motion
-%a = tic;
-profile = 'MPEG-4';
-if isunix
-    profile = 'Motion JPEG AVI';
+if ~isempty(p.Results.des)
+    profile = 'MPEG-4';
+    if isunix
+        profile = 'Motion JPEG AVI';
+    end
+    v = VideoWriter(p.Results.des, profile);
+    v.FrameRate = p.Results.frameRate;
+    open(v);
 end
-v = VideoWriter(des, profile);
-v.FrameRate = frameRate;
-open(v);
-a = tic;
-while j ~=  movieLength
-  %b = toc(a);
-  %if b > frameLength
-  % Update all viewports
+
+j = 1;
+while j ~= movieLength
   for pose = poses
-      skelModify(pose.handles, pose.channels(j, :), pose.skel);
+      if j <= length(pose.channels)
+          skelModify(pose.handles, pose.channels(j, :), pose.skel);
+      end
   end
   drawnow;
-  j = j + 1;
-  writeVideo(v, getframe(gcf));
-  %a = tic;
-  %end
-  %pause(frameLength);
-  
-  %frames(j) = getframe(gcf);
+  j = j+1;
+  if ~isempty(p.Results.des)
+      writeVideo(v, getframe(gcf));
+  else
+      pause(1/p.Results.frameRate)
+  end
 end
-b = toc(a)
-close(v);
+
+if ~isempty(p.Results.des)
+    close(v);
+end
