@@ -1,4 +1,19 @@
 function [poses, count] = drawInitialPose(viewport, count, poses, viewDim)
+% drawInitialPose(viewport, count, poses, viewDim)
+%
+% Draws the first frame of the data channel in view
+%
+% Returns:
+%   poses: an array of pose structs that contain handles to the plot
+%   count: a number that points to the next pose in the poses array.
+%
+% Arguments:
+%   viewport: viewport struct that specifies the viewport info(limits titles etc.)
+%       and its contents (data channels, skeleton etc.)
+%   count: a number that points to the current pose in the poses array.
+%   poses: an array of pose structs that contain handles to the plot
+%   viewDim: a vector that specifies the dimensions of the subplots.
+
 for j = 1:length(viewport.titles)
     subplot(viewDim(1), viewDim(2), viewport.locations{j});
     poses(count).handles(1) = plot3(viewport.vals(:, 1), viewport.vals(:, 3),...

@@ -1,11 +1,13 @@
 function runningTime = getRunningTime(data)
-% getRunningTime gets the non-nan length of a time-series data matrix
+% getRunningTime(data)
+%
+% Gets the non-nan length of a time-series data matrix
 %
 % Returns:
-%   RUNNINGTIME - the non-nan length of DATA
+%   runningTime - the non-nan length of DATA
 % Arguments:
-%   DATA - time seriese data matrix where the time progresses along the
-%	first dim (rows)  
+%   data - time seriese data matrix (data channel) where the time progresses 
+%       along the first dim (rows)  
 
 [runI, runJ] = ind2sub(size(data), find(isnan(data)));
 runI = unique(runI);

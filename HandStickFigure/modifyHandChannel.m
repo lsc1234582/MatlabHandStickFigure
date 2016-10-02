@@ -1,15 +1,20 @@
-function modifiedCh = modifyHandChannel(ch, fingerAbdW, chAdj)
-% Extra chanel for Zrotation for index lower joint
-% After testing para is best to be set [1,0;0,1;0,1]
+function modifiedCh = modifyHandChannel(ch, fingerAbdW)
+% modifyHandChannel(ch, fingerAbdW)
+% 
+% Converts raw (calibrated) sensor data into joint angle data that can be
+% used by bvh skeleton to play back motion.
+%
+% Returns:
+%   modifiedCh: converted channel
+%
+% Arguments:
+%   ch: raw and calibrated sensor data
+%   fingerAbdW: a 3x2 matrix containing linear weights for the extent of 
+%       left/hand finger abduction sensors; if left blanck default value 
+%       [1,0;0,1;0,1] will be used.
+
 if isempty(fingerAbdW)
     fingerAbdW = [1,0;0,1;0,1];
-end
-if isempty(chAdj)
-    if size(ch, 2) == 18
-        chAdj = zeros(1, 18);
-    else
-        chAdj = zeros(1, 22);
-    end
 end
     
 % A little bit of magic
@@ -43,9 +48,6 @@ else
 
     ch = [ch(:, 1:7), abs_abd(:, 1), ch(:, 8:10), abs_abd(:, 2), ch(:, 12:14), ...
         abs_abd(:, 3), ch(:, 16:18), abs_abd(:, 4), ch(:, 20:22)];
-
-    ch_size = size(ch);
-    padding = zeros(ch_size(1), 10);
 
     modifiedCh = [ch(:,22:23), ...
         ch(:,1), ch(:,4), ...

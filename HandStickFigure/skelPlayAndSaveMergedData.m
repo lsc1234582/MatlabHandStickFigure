@@ -1,25 +1,21 @@
 function skelPlayAndSaveMergedData(dataViews, varargin)
-
-% SKELPLAYDATA Play skel motion capture data.
+% skelPlayAndSaveMergedData(dataViews, [des, frameRate, gcfPos])
+% 
+% Plays back or save one or data sources in customisable views.
 %
-%	Description:
+% Returns:
+%   none
 %
-%	SKELPLAYDATA(SKEL, CHANNELS, FRAMELENGTH) plays channels from a
-%	motion capture skeleton and channels.
-%	 Arguments:
-%	  SKEL - the skeleton for the motion.
-%	  CHANNELS - the channels for the motion.
-%	  FRAMELENGTH - the framelength for the motion.
-%	
-%
-%	See also
-%	BVHPLAYDATA, ACCLAIMPLAYDATA
-
-
-%	modified by SiCong Li
-% 	skelPlayData.m CVS version 1.2
-% 	skelPlayData.m SVN version 42
-% 	last update 2008-08-12T20:23:47.000000Z
+% Arguments:
+%   dataViews: an array of dataView structs (obtained from either
+%   getHandDataView or getSuitDataView)
+%   [des]: path and name of the output video file; if left blanck only
+%       plays back the motion instead of saving it.
+%   [frameRate]: frame rate at which the motion is played/saved; if left
+%       blanck default value (120 fps) will be used.
+%   [gcfPos]: a vector specifying the screen position and resolution of the
+%       figure; if left blanck default value [100, 100, 1440, 900] will be
+%       used.
 
 p = inputParser;
 p.addRequired('dataViews');

@@ -1,5 +1,20 @@
 function viewport = getViewportContent(channels, skel, titles, ...
     locs, orients)
+% getViewportContent(channels, skel, titles, locs, orients)
+%
+% Gets the viewport info(limits of each axis, titles, subplot locations e.t.c
+% and its contents (channels and skeleton)
+%
+% Returns:
+%   viewport: a viewport struct that contains all info
+%
+% Arguments:
+%   channels: the data channel to be displayed in this viewport
+%   skel: the skeleton for the data channel
+%   titles: a cell array containing titles for each view
+%   locs: a cell array containing subplot locations for each view
+%   orients: a cell array containing the orientations in [Azimuth, Elevation]
+%       format.
 
 channels1 = channels(1, :);
 viewport.vals = skel2xyz(skel, channels1);

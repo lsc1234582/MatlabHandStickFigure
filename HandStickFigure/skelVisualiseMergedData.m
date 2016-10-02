@@ -1,26 +1,17 @@
 function poses = skelVisualiseMergedData(dataViews, gcfPos)
-
-% SKELVISUALISE For drawing a skel representation of 3-D data.
+% skelVisualiseMergedData(dataViews, gcfPos)
 %
-%	Description:
+% Draws the first frame of all data channels in their respective viewports
+% and returns an array of struct poses that caontain handles to the plot
+% for future modification.
 %
-%	HANDLE = SKELVISUALISE(CHANNELS, SKEL) draws a skeleton
-%	representation in a 3-D plot.
-%	 Returns:
-%	  HANDLE - a vector of handles to the plotted structure.
-%	 Arguments:
-%	  CHANNELS - the channels to update the skeleton with.
-%	  SKEL - the skeleton structure.
-%	
+% Returns:
+%   poses: an array of pose struct that contains handles to the plot
 %
-%	See also
-%	SKELMODIFY
- 
-
-%	Copyright (c) 2005, 2006 Neil D. Lawrence
-% 	skelVisualise.m CVS version 1.4
-% 	skelVisualise.m SVN version 30
-% 	last update 2008-01-12T11:32:50.000000Z
+% Arguments:
+%   dataViews: an array of dataview structs
+%   gcfPos: a vector that specifies the screen position and resolution of
+%       the figure
 
 set(gcf, 'pos', gcfPos);
 

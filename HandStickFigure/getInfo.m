@@ -1,9 +1,12 @@
 function info = getInfo(ethome, resourceName)
-% getInfo gets basic info (total and runnign length in minutes of each component) of
+% getInfo(ethome, resourceName)
+%
+% Gets basic info (total and runnign length in minutes of each body part) of
 % an ethome dataset
 %
 % Returns: 
 %   info - a struct containing all info
+%
 % Arguments:
 %   ethome - ethome data set
 %   resourceName - the name of the .mat file from which this dataset is obtained
